@@ -47,7 +47,7 @@ router.post("/adduser", async (req, res) => {
 // 3. List Users
 router.get("/userlist", async (req, res) => {
   try {
-    const [users] = await pool.query("SELECT * FROM tbl_user");
+    const [users] = await pool.query("SELECT * FROM tbl_user where is_deleted = 0");
     res.render("userlist", { users, user: req.session.user });
   } catch (err) {
     console.error("Error fetching user list:", err);
@@ -58,7 +58,7 @@ router.get("/userlist", async (req, res) => {
 // 4. Load Edit User Page
 router.get("/edituser/:id", async (req, res) => {
   try {
-    const [user] = await pool.query("SELECT * FROM tbl_user WHERE user_id = ?", [
+    const [user] = await pool.query("SELECT * FROM tbl_user WHERE user_id = ? where is_deleted = 0", [
       req.params.id,
     ]);
 
@@ -89,7 +89,7 @@ router.post("/edituser/:id", async (req, res) => {
     } = req.body;
 
     const result = await pool.query(
-      "UPDATE tbl_user SET user_fname = ?, user_lname = ?, user_email = ?, user_phone = ?, user_address = ?, user_city = ?, user_state = ?, user_country = ?, user_dob = ? WHERE user_id = ?",
+      "UPDATE tbl_user SET user_fname = ?, user_lname = ?, user_email = ?, user_phone = ?, user_address = ?, user_city = ?, user_state = ?, user_country = ?, user_dob = ? WHERE user_id = ? and is_deleted = 0",
       [
         user_fname,
         user_lname,
@@ -118,7 +118,7 @@ router.post("/edituser/:id", async (req, res) => {
 // 6. Delete User
 router.get("/deleteuser/:id", async (req, res) => {
   try {
-    const result = await pool.query("DELETE FROM tbl_user WHERE user_id = ?", [
+    const result = await pool.query("DELETE FROM tbl_user WHERE user_id = ? and is_deleted = 0", [
       req.params.id,
     ]);
 
@@ -143,7 +143,7 @@ router.post("/login", async (req, res) => {
       const { user_email, passwords } = req.body;
   
       const [user] = await pool.query(
-        "SELECT * FROM tbl_user WHERE user_email = ? AND passwords = ?",
+        "SELECT * FROM tbl_user WHERE user_email = ? AND passwords = ? and is_deleted = 0",
         [user_email, passwords]
       );
   

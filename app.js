@@ -15,7 +15,6 @@ app.set('layout', 'main');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
 app.use(session({
     secret: 'secretkey',
     resave: false,
