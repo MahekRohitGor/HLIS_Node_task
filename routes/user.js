@@ -2,13 +2,21 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../config/database.js");
 
+const isAuthenticated = (req, res, next) => {
+    if (!req.session.user) {
+      return res.redirect("/login");
+    }
+    next();
+  };
+
+
 // 1. Load Add User Form
-router.get("/adduser", (req, res) => {
+router.get("/adduser", isAuthenticated, (req, res) => {
   res.render("adduser", { user: req.session.user });
 });
 
 // 2. Submit Form to Add User
-router.post("/adduser", async (req, res) => {
+router.post("/adduser", isAuthenticated, async (req, res) => {
   try {
     const {
       user_fname,
@@ -56,9 +64,9 @@ router.get("/userlist", async (req, res) => {
 });
 
 // 4. Load Edit User Page
-router.get("/edituser/:id", async (req, res) => {
+router.get("/edituser/:id", isAuthenticated, async (req, res) => {
   try {
-    const [user] = await pool.query("SELECT * FROM tbl_user WHERE user_id = ? where is_deleted = 0", [
+    const [user] = await pool.query("SELECT * FROM tbl_user WHERE user_id = ? and is_deleted = 0", [
       req.params.id,
     ]);
 
@@ -74,7 +82,7 @@ router.get("/edituser/:id", async (req, res) => {
 });
 
 // 5. Update User
-router.post("/edituser/:id", async (req, res) => {
+router.post("/edituser/:id", isAuthenticated, async (req, res) => {
   try {
     const {
       user_fname,
@@ -116,7 +124,7 @@ router.post("/edituser/:id", async (req, res) => {
 });
 
 // 6. Delete User
-router.get("/deleteuser/:id", async (req, res) => {
+router.get("/deleteuser/:id", isAuthenticated, async (req, res) => {
   try {
     const result = await pool.query("DELETE FROM tbl_user WHERE user_id = ? and is_deleted = 0", [
       req.params.id,
