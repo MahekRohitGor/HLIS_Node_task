@@ -7,7 +7,6 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f7fc;
     color: #272525;
 }
 
@@ -39,6 +38,16 @@ nav a:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
 }
+
+.container-login{
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
 
 h2 {
     text-align: center;
