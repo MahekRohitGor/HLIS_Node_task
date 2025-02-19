@@ -118,9 +118,8 @@ router.post("/edituser/:id", isAuthenticated, async (req, res) => {
 
     res.redirect("/userlist");
   } catch (err) {
-    res.render("errorEdit.ejs", { errorMessage: `Error Updating User: ${err}`, user:req.session.user});
     console.error("Error updating user:", err);
-    // res.status(500).send("Error updating user. Please try again.");
+    res.status(500).send("Error updating user. Please try again.");
   }
 });
 

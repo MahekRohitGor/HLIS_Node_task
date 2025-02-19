@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List User</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        
+<h2>User List</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+        <th>Actions</th>
+    </tr>
+    <% users.forEach(user => { %>
+    <tr>
+        <td><%= user.user_id %></td>
+        <td><%= user.user_fname %> <%= user.user_lname %></td>
+        <td><%= user.user_email %></td>
+        <td><%= user.user_phone %></td>
+        <td><%= user.user_address %></td>
+        <td><%= user.user_city %></td>
+        <td><%= user.user_state %></td>
+        <td><%= user.user_country %></td>
+        <td>
+            <a href="/edituser/<%= user.user_id %>" class="btn btn-edit">Edit</a>
+            <a href="/deleteuser/<%= user.user_id %>" onclick="return confirm('Are you sure ?')" class="btn btn-delete">Delete</a>
+        </td>
+    </tr>
+    <% }) %>
+</table>
+    </div>
+</body>
+</html>
+
+

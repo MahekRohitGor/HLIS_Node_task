@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+    <h2>Heyyyy, <%= user.user_fname %>! Welcome...</h2>
+    <div class="content-profile">
+        <p><strong>Email:</strong> <%= user.user_email %></p>
+        <p><strong>Phone:</strong> <%= user.user_phone %></p>
+        <p><strong>Address:</strong> <%= user.user_address %>, <%= user.user_city %>, <%= user.user_state %>, <%= user.user_country %></p>
+        <p><strong>DOB:</strong> <%= user.user_dob %></p>
+    </div>
+    <a href="/logout" class="logout">Logout</a>
+    </div>
+</body>
+</html>
+
